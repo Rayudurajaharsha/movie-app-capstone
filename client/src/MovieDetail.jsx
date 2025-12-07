@@ -4,6 +4,7 @@ import useSWR, { mutate } from 'swr';
 import axios from 'axios';
 import ReviewForm from './ReviewForm';
 import { auth } from './firebase';
+import API_URL from './api'; // Import API_URL
 import './App.css';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -21,11 +22,11 @@ const MovieDetail = () => {
     );
 
     // Fetch Reviews
-    const { data: reviews } = useSWR(`http://localhost:5000/reviews/${id}`, fetcher);
+    const { data: reviews } = useSWR(`${API_URL}/reviews/${id}`, fetcher);
 
     // Check if already in watchlist (only if logged in)
     const { data: watchlistStatus, mutate: mutateStatus } = useSWR(
-        currentUser ? `http://localhost:5000/watchlist/${currentUser.uid}/${id}` : null,
+        currentUser ? `${API_URL}/watchlist/${currentUser.uid}/${id}` : null,
         fetcher
     );
 
@@ -35,10 +36,10 @@ const MovieDetail = () => {
         try {
             if (watchlistStatus?.isSaved) {
                 // Remove
-                await axios.delete(`http://localhost:5000/watchlist/${watchlistStatus.itemId}`);
+                await axios.delete(`${API_URL}/watchlist/${watchlistStatus.itemId}`);
             } else {
                 // Add
-                await axios.post('http://localhost:5000/watchlist', {
+                await axios.post(`${API_URL}/watchlist`, {
                     userId: currentUser.uid,
                     movieId: movie.id,
                     title: movie.title,
@@ -56,7 +57,7 @@ const MovieDetail = () => {
     };
 
     const handleReviewAdded = () => {
-        mutate(`http://localhost:5000/reviews/${id}`);
+        mutate(`${API_URL}/reviews/${id}`);
     };
 
     if (movieError) return <div className="error">Failed to load movie.</div>;

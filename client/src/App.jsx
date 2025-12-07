@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { signInWithGoogle, logout, auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import MovieDetail from './MovieDetail';
+import API_URL from './api'; // Import the new API URL
 import './App.css';
 
 // ... (fetcher and Home component remain the same) ...
@@ -38,16 +39,17 @@ const Home = () => {
 
 // --- UPDATED WATCHLIST COMPONENT ---
 const Watchlist = ({ user }) => {
+  // Use API_URL here
   const { data: watchlist, error } = useSWR(
-    user ? `http://localhost:5000/watchlist/${user.uid}` : null,
+    user ? `${API_URL}/watchlist/${user.uid}` : null,
     fetcher
   );
 
   const removeFromWatchlist = async (e, id) => {
     e.preventDefault(); // Prevent clicking the link
     try {
-      await axios.delete(`http://localhost:5000/watchlist/${id}`);
-      mutate(`http://localhost:5000/watchlist/${user.uid}`); // Refresh list
+      await axios.delete(`${API_URL}/watchlist/${id}`);
+      mutate(`${API_URL}/watchlist/${user.uid}`); // Refresh list
     } catch (err) {
       console.error(err);
     }
@@ -123,6 +125,8 @@ function App() {
         <Route path="/watchlist" element={<Watchlist user={user} />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
       </Routes>
+
+      {/* FOOTER ADDED HERE */}
       <footer className="app-footer">
         <p>&copy; 2025 RRH. Built for Capstone Project.</p>
         <div style={{ marginTop: '10px', fontSize: '0.8rem', opacity: '0.8' }}>
