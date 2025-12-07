@@ -1,0 +1,15 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Production
+build
+dist
+
+# Environment variables (NEVER commit these!)
+.env
+.DS_Store
