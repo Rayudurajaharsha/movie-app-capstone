@@ -1,42 +1,397 @@
-#root {
-  max-width: 1280px;
+:root {
+  --bg-color: #141414;
+  --card-bg: #1f1f1f;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-color: #e50914;
+  /* Netflix Red */
+  --nav-height: 70px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Navigation --- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  /* Pushes Logo left, Right-Group right */
+  align-items: center;
+  padding: 0 2rem;
+  height: var(--nav-height);
+  background: rgba(20, 20, 20, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Grouping container for Nav + User */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  /* Space between the links and the user info */
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  font-size: 0.95rem;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+/* --- User Section --- */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  border-left: 1px solid #333;
+  /* Adds a subtle separator line */
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+/* Hide name on mobile to save space */
+@media (max-width: 600px) {
+  .user-name {
+    display: none;
+  }
+
+  .header-right {
+    gap: 15px;
+  }
+
+  .user-info {
+    padding-left: 10px;
+    gap: 10px;
+  }
+}
+
+.btn-login,
+.btn-logout {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  background-color: #f40612;
+  transform: scale(1.05);
+}
+
+/* --- Layout Container --- */
+.container {
+  padding: 20px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* --- Movie Grid --- */
+.movie-grid {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 50px;
+  /* Default: Mobile (Strictly 2 columns) */
+  grid-template-columns: repeat(2, 1fr);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Fix for Link Wrapper */
+.movie-grid a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Tablet & Desktop: Dynamic Auto-Fill */
+@media (min-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 }
 
-.card {
-  padding: 2em;
+.movie-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.read-the-docs {
+.movie-card:hover {
+  transform: scale(1.03);
+  z-index: 10;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+}
+
+.movie-card img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-card h3 {
+  font-size: 1rem;
+  margin: 12px 12px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.movie-card p {
+  color: #46d369;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin: 0 12px 15px;
+}
+
+/* --- Movie Detail Page Styles --- */
+.movie-detail-container {
+  color: white;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.hero-section {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), #141414);
+}
+
+.hero-content {
+  position: relative;
+  padding: 40px;
+  max-width: 800px;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tagline {
+  font-style: italic;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+}
+
+.overview {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ddd;
+  max-width: 700px;
+}
+
+/* Review Form & List */
+.content-section {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.review-form {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  background: #333;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.rating-select {
+  padding: 8px;
+  background: #333;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.btn-submit {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* --- Watchlist Buttons --- */
+.btn-watchlist {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 10px 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-watchlist:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-watchlist.saved {
+  background-color: #46d369;
+  /* Green for Saved */
+  border-color: #46d369;
+  color: black;
+}
+
+/* Tiny Trash Can for removing from list */
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  padding: 0 10px 10px;
+}
+
+.remove-btn:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.review-card {
+  background: #1f1f1f;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 4px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
   color: #888;
+}
+
+.star-rating {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  border-radius: 8px;
+}
+
+/* Loading/Error */
+.loading,
+.error {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Footer --- */
+.app-footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 50px;
+  border-top: 1px solid #333;
 }
