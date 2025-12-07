@@ -1,39 +1,40 @@
-Movie Recommendation Engine Capstone
+# Movie Recommendation Engine Capstone
 
-Overview
+## Overview
 
 A full-stack MERN application (MongoDB, Express, React, Node) allowing users to browse movies, log in via Google, and manage a personalized watchlist.
 
-Architecture
+## Architecture
 
-Frontend: React (Vite), TailwindCSS, Framer Motion
+* **Frontend:** React (Vite), TailwindCSS, Framer Motion
 
-Backend: Express.js, REST API
+* **Backend:** Express.js, REST API
 
-Database: MongoDB Atlas
+* **Database:** MongoDB Atlas
 
-Auth: Firebase (Google OAuth)
+* **Auth:** Firebase (Google OAuth)
 
-How to Run
+## How to Run
 
-Open this folder in VS Code.
+1. Open this folder in VS Code.
 
-Ensure Docker Desktop is running.
+2. Ensure Docker Desktop is running.
 
-Click "Reopen in Container" when prompted.
+3. Click "Reopen in Container" when prompted.
 
-Run npm install in both /client and /server.
+4. Run `npm install` in both `/client` and `/server`.
 
-Start Backend: cd server && npm run dev
+5. Start Backend: `cd server && npm run dev`
 
-Start Frontend: cd client && npm run dev
+6. Start Frontend: `cd client && npm run dev`
 
-System Architecture
+## System Architecture
 
-"Add to Watchlist" Sequence Diagram
+### "Add to Watchlist" Sequence Diagram
 
 This diagram illustrates the data flow when a user saves a movie to their personal list.
 
+```mermaid
 sequenceDiagram
     participant U as User
     participant R as React Frontend
@@ -52,3 +53,4 @@ sequenceDiagram
         A-->>R: Return JSON Response
         R-->>U: Button turns Green ("In Watchlist")
     end
+```
