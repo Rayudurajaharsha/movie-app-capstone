@@ -54,3 +54,18 @@ sequenceDiagram
         R-->>U: Button turns Green ("In Watchlist")
     end
 ```
+## Design Patterns
+
+This project utilizes two core architectural patterns:
+
+### 1. Component-Based Architecture (Frontend)
+The React frontend breaks the UI into independent, reusable pieces (e.g., `MovieCard`, `ReviewForm`). This ensures isolation of logic and styles, making the interface easier to maintain and test.
+
+### 2. MVC (Model-View-Controller) Adaptation (Backend)
+The Express backend follows an MVC-style separation of concerns:
+* **Model:** Mongoose Schemas (`Review.js`, `WatchlistItem.js`) define the data structure.
+* **Controller:** The route handlers in `index.js` manage the logic (CRUD operations).
+* **View:** The JSON responses serve as the data view consumed by the React client.
+
+### 3. RESTful API
+The client and server communicate via a REST API, using standard HTTP methods (GET, POST, PUT, DELETE) to manage resources.

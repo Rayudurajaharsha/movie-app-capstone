@@ -123,10 +123,16 @@ function App() {
         <Route path="/watchlist" element={<Watchlist user={user} />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
       </Routes>
-
-      {/* FOOTER ADDED HERE */}
       <footer className="app-footer">
-        &copy; 2025 RRH
+        <p>&copy; 2025 RRH. Built for Capstone Project.</p>
+        <div style={{ marginTop: '10px', fontSize: '0.8rem', opacity: '0.8' }}>
+          <img
+            src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+            alt="TMDB Logo"
+            style={{ height: '20px', verticalAlign: 'middle', marginRight: '8px' }}
+          />
+          <span>This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+        </div>
       </footer>
     </div>
   );
