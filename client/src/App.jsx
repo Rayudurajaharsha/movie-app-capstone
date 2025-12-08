@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import useSWR, { mutate } from 'swr'; // Import mutate
 import axios from 'axios';
-import { motion } from 'framer-motion';
+//import { motion } from 'framer-motion';
 import { signInWithGoogle, logout, auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import MovieDetail from './MovieDetail';
@@ -40,7 +40,7 @@ const Home = () => {
 // --- UPDATED WATCHLIST COMPONENT ---
 const Watchlist = ({ user }) => {
   // Use API_URL here
-  const { data: watchlist, error } = useSWR(
+  const { data: watchlist } = useSWR(
     user ? `${API_URL}/watchlist/${user.uid}` : null,
     fetcher
   );

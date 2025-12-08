@@ -1,29 +1,44 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path'); // Import 'path' module
 const Review = require('./models/Review');
-const WatchlistItem = require('./models/WatchlistItem'); // Import the new model
+const WatchlistItem = require('./models/WatchlistItem');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080; // Google App Engine expects 8080
 
 app.use(cors());
 app.use(express.json());
 
+// Database Connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB Connected!'))
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// --- EXISTING REVIEW ROUTES ---
-app.post('/reviews', async (req, res) => { /* ... existing code ... */ });
-app.get('/reviews/:movieId', async (req, res) => { /* ... existing code ... */ });
-app.put('/reviews/:id', async (req, res) => { /* ... existing code ... */ });
-app.delete('/reviews/:id', async (req, res) => { /* ... existing code ... */ });
+// --- API ROUTES ---
+app.post('/reviews', async (req, res) => {
+    try {
+        const { userId, userEmail, movieId, movieTitle, content, rating } = req.body;
+        const newReview = new Review({ userId, userEmail, movieId, movieTitle, content, rating });
+        const savedReview = await newReview.save();
+        res.status(201).json(savedReview);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-// --- NEW WATCHLIST ROUTES ---
+app.get('/reviews/:movieId', async (req, res) => {
+    try {
+        const { movieId } = req.params;
+        const reviews = await Review.find({ movieId });
+        res.json(reviews);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-// 1. ADD to Watchlist
 app.post('/watchlist', async (req, res) => {
     try {
         const { userId, movieId, title, posterPath, voteAverage } = req.body;
@@ -38,7 +53,6 @@ app.post('/watchlist', async (req, res) => {
     }
 });
 
-// 2. GET User's Watchlist
 app.get('/watchlist/:userId', async (req, res) => {
     try {
         const items = await WatchlistItem.find({ userId: req.params.userId }).sort({ createdAt: -1 });
@@ -48,7 +62,6 @@ app.get('/watchlist/:userId', async (req, res) => {
     }
 });
 
-// 3. REMOVE from Watchlist
 app.delete('/watchlist/:id', async (req, res) => {
     try {
         await WatchlistItem.findByIdAndDelete(req.params.id);
@@ -58,7 +71,6 @@ app.delete('/watchlist/:id', async (req, res) => {
     }
 });
 
-// Check if specific movie is saved (for button state)
 app.get('/watchlist/:userId/:movieId', async (req, res) => {
     try {
         const item = await WatchlistItem.findOne({ userId: req.params.userId, movieId: req.params.movieId });
@@ -66,6 +78,16 @@ app.get('/watchlist/:userId/:movieId', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// --- SERVE REACT FRONTEND (DEPLOYMENT) ---
+// Serve static files from the 'dist' directory
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Handle React routing, return all requests to React app
+// Handle React routing - USE REGEX /.*/ TO PREVENT CRASH
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
