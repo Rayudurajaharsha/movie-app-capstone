@@ -111,16 +111,20 @@ sequenceDiagram
 ```
 ## Design Patterns
 
-This project utilizes two core architectural patterns:
+This project utilizes professional architectural patterns to ensure scalability and maintainability:
 
 ### 1. Component-Based Architecture (Frontend)
-The React frontend breaks the UI into independent, reusable pieces (e.g., `MovieCard`, `ReviewForm`). This ensures isolation of logic and styles, making the interface easier to maintain and test.
+The React frontend breaks the UI into independent, reusable pieces (e.g., `MovieCard`, `ReviewForm`).
+* **State Management:** Utilizes `useSWR` (Stale-While-Revalidate) for efficient server-state synchronization, caching, and automatic background revalidation.
+* **Build Strategy:** The frontend is compiled into optimized static assets (`dist` folder) rather than running as a separate node process in production.
 
 ### 2. MVC (Model-View-Controller) Adaptation (Backend)
 The Express backend follows an MVC-style separation of concerns:
-* **Model:** Mongoose Schemas (`Review.js`, `WatchlistItem.js`) define the data structure.
-* **Controller:** The route handlers in `index.js` manage the logic (CRUD operations).
-* **View:** The JSON responses serve as the data view consumed by the React client.
+* **Model:** Mongoose Schemas (`Review.js`, `WatchlistItem.js`) define the data structure and validation logic.
+* **Controller:** REST API route handlers manage business logic (CRUD operations) and request validation.
+* **View:** The backend serves two types of views: JSON responses for API calls and the compiled React `index.html` for client-side navigation.
 
-### 3. RESTful API
-The client and server communicate via a REST API, using standard HTTP methods (GET, POST, PUT, DELETE) to manage resources.
+### 3. Unified Service Architecture
+Instead of deploying separate frontend and backend servers, this project implements a **Unified Deployment** pattern:
+* The Express server acts as the single entry point, handling both API requests (e.g., `/reviews`) and serving the static React files.
+* This architecture eliminates CORS issues in production and allows the entire full-stack application to run on a single Google App Engine instance.
