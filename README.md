@@ -9,21 +9,25 @@ A full-stack MERN application (MongoDB, Express, React, Node) allowing users to 
 
 This project is deployed as a unified service on **Google App Engine**.
 
-## Architecture & Design Patterns
-This project follows a professional architectural approach:
+# Design Patterns
+
+This project utilizes professional architectural patterns to ensure scalability and maintainability:
 
 ### 1. Component-Based Architecture (Frontend)
-* **Tech:** React (Vite), TailwindCSS, Framer Motion.
-* **Pattern:** UI logic is separated into reusable components (`MovieCard`, `ReviewForm`), using `useSWR` for state management and caching.
+The React frontend breaks the UI into independent, reusable pieces (e.g., `MovieCard`, `ReviewForm`).
+* **State Management:** Utilizes `useSWR` (Stale-While-Revalidate) for efficient server-state synchronization, caching, and automatic background revalidation.
+* **Build Strategy:** The frontend is compiled into optimized static assets (`dist` folder) rather than running as a separate node process in production.
 
 ### 2. MVC (Model-View-Controller) Adaptation (Backend)
-* **Tech:** Express.js, Node.js.
-* **Model:** Mongoose Schemas (`Review.js`, `WatchlistItem.js`) define data structure and validation.
-* **Controller:** REST API routes handle business logic (CRUD operations).
-* **View:** JSON responses serve as the data view consumed by the React client.
+The Express backend follows an MVC-style separation of concerns:
+* **Model:** Mongoose Schemas (`Review.js`, `WatchlistItem.js`) define the data structure and validation logic.
+* **Controller:** REST API route handlers manage business logic (CRUD operations) and request validation.
+* **View:** The backend serves two types of views: JSON responses for API calls and the compiled React `index.html` for client-side navigation.
 
-### 3. Unified Deployment
-* **Pattern:** The React frontend is built into static files and served by the Express backend, allowing both to run on a single Google App Engine instance.
+### 3. Unified Service Architecture
+Instead of deploying separate frontend and backend servers, this project implements a **Unified Deployment** pattern:
+* The Express server acts as the single entry point, handling both API requests (e.g., `/reviews`) and serving the static React files.
+* This architecture eliminates CORS issues in production and allows the entire full-stack application to run on a single Google App Engine instance.
 
 ## Instructions to Run the Code
 
