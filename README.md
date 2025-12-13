@@ -113,3 +113,5 @@ sequenceDiagram
         R-->>U: Button turns Green ("In Watchlist")
     end
 ```
+## Acknowledgments
+* **AI Assistance:** Development supported by **Google Gemini**.
