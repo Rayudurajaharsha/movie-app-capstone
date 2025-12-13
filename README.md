@@ -2,7 +2,7 @@
 
 **Status:** Deployed & Live 🟢
 **Live URL:** https://icsi518-480619.uk.r.appspot.com/
-**Video Demo:** [PASTE YOUR YOUTUBE/DRIVE LINK HERE]
+**Video Demo:** https://drive.google.com/file/d/1QpvSkarYIhYQQUvW6oVhVbWRSkAW78tu/view?usp=sharing
 
 ## Overview
 A full-stack MERN application (MongoDB, Express, React, Node) allowing users to browse movies via the TMDB API, log in via Google OAuth, and manage a personalized watchlist stored in MongoDB Atlas.
