@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCvT3KDv6FxmvJ0M_Qzt3A-GVJ4-weVd6k",
+    apiKey: "ApIKey--- IGNORE ---",
     authDomain: "movie-app-capstone.firebaseapp.com",
     projectId: "movie-app-capstone",
     storageBucket: "movie-app-capstone.firebasestorage.app",
-    messagingSenderId: "720121930210",
-    appId: "1:720121930210:web:72155347d16429cd7ad9bb"
+    messagingSenderId: "SenderId--- IGNORE ---",
+    appId: "AppId--- IGNORE ---"
 };
 
 // Initialize Firebase

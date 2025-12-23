@@ -1,4 +1,4 @@
 runtime: nodejs20 # Checks if your container uses Node 20 or 22. 20 is safe.
 env_variables:
   NODE_ENV:  "production"
-  MONGO_URI:  "mongodb+srv://admin:admin12@cluster0.1qfkwn2.mongodb.net/movie-app?retryWrites=true&w=majority"
+  MONGO_URI:  "mongodb url"
